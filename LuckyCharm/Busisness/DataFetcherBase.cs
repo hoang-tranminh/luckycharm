@@ -15,21 +15,21 @@ namespace LuckyCharm.Busisness
     {
         private ILog _logger = LogManager.GetLogger(typeof(DataFetcherBase));
 
-        protected Regex Special = new Regex(@"<td class=""giaidb"">\s+<div>(\d+)<\/div><\/td>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
+        protected Regex Special = new Regex(@"<td class=""giaidb"">\s+<div>(\d+)[^\d]*<\/div><\/td>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
         protected Regex First = new Regex(@"<td class=""giai1"">\s+<div>(\d+)[^\d]*<\/div>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
-        protected Regex Second = new Regex(@"<td class=""giai2"">\s+<div>(\d+)<\/div><div>(\d+)<\/div>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
+        protected Regex Second = new Regex(@"<td class=""giai2"">\s+<div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
-        protected Regex Third = new Regex(@"<td class=""giai3"">\s+<div>(\d+)<\/div><div>(\d+)<\/div><div>(\d+)<\/div><div>(\d+)<\/div><div>(\d+)<\/div><div>(\d+)<\/div><\/td>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
+        protected Regex Third = new Regex(@"<td class=""giai3"">\s+<div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><\/td>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
-        protected Regex Fourth = new Regex(@"<td class=""giai4"">\s+<div>(\d+)<\/div><div>(\d+)<\/div><div>(\d+)<\/div><div>(\d+)<\/div>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
+        protected Regex Fourth = new Regex(@"<td class=""giai4"">\s+<div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
-        protected Regex Fifth = new Regex(@"<td class=""giai5"">\s+<div>(\d+)<\/div><div>(\d+)<\/div><div>(\d+)<\/div><div>(\d+)<\/div><div>(\d+)<\/div><div>(\d+)<\/div><\/td>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
+        protected Regex Fifth = new Regex(@"<td class=""giai5"">\s+<div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><\/td>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
-        protected Regex Sixth = new Regex(@"<td class=""giai6"">\s+<div>(\d+)<\/div><div>(\d+)<\/div><div>(\d+)<\/div><\/td>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
+        protected Regex Sixth = new Regex(@"<td class=""giai6"">\s+<div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><\/td>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
-        protected Regex Seventh = new Regex(@"<td class=""giai7"">\s+<div>(\d+)<\/div><div>(\d+)<\/div><div>(\d+)<\/div><div>(\d+)<\/div>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
+        protected Regex Seventh = new Regex(@"<td class=""giai7"">\s+<div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div><div>(\d+)[^\d]*<\/div>", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
         protected string URL = "http://www.minhngoc.net.vn/ket-qua-xo-so/mien-bac/{0}.html";
 
@@ -173,11 +173,33 @@ namespace LuckyCharm.Busisness
             {
                 //update
                 item.First = dailyItem.First;
+
                 item.Second1 = dailyItem.Second1;
                 item.Second2 = dailyItem.Second2;
+
+                item.Third1 = dailyItem.Third1;
+                item.Third2 = dailyItem.Third2;
+                item.Third3 = dailyItem.Third3;
+                item.Third4 = dailyItem.Third4;
+                item.Third5 = dailyItem.Third5;
+                item.Third6 = dailyItem.Third6;
+
+                item.Fourth1 = dailyItem.Fourth1;
+                item.Fourth2 = dailyItem.Fourth2;
+                item.Fourth3 = dailyItem.Fourth3;
+                item.Fourth4 = dailyItem.Fourth4;
+
+                item.Fifth1 = dailyItem.Fifth1;
+                item.Fifth2 = dailyItem.Fifth2;
+                item.Fifth3 = dailyItem.Fifth3;
+                item.Fifth4 = dailyItem.Fifth4;
+                item.Fifth5 = dailyItem.Fifth5;
+                item.Fifth6 = dailyItem.Fifth6;
+
                 item.Sixth1 = dailyItem.Sixth1;
                 item.Sixth2 = dailyItem.Sixth2;
                 item.Sixth3 = dailyItem.Sixth3;
+
                 item.Seventh1 = dailyItem.Seventh1;
                 item.Seventh2 = dailyItem.Seventh2;
                 item.Seventh3 = dailyItem.Seventh3;
