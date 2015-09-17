@@ -23,6 +23,21 @@ namespace LuckyCharm.Busisness
             }
         }
 
+        private DateTime _latestAnalyzedDate = DateTime.MinValue;
+
+        public virtual DateTime LatestAnalyzedDate
+        {
+            get
+            {
+                if (_latestAnalyzedDate == DateTime.MinValue)
+                {
+                    var item = Context.DailyResults.OrderByDescending(a => a.Date).FirstOrDefault();
+                    _latestAnalyzedDate = item == null ? DateTime.MinValue : item.Date;
+                }
+                return _latestAnalyzedDate;
+            }
+        }
+
         public void BuildSourceToAnalyse()
         {
             var skip = 0;
@@ -163,25 +178,25 @@ namespace LuckyCharm.Busisness
                     throw new NotSupportedException();
                 }
 
-                if (listOfAnalysisItems.Count >= 2) //only have this data after two occurrences
+                if (listOfAnalysisItems.Count >= 3) //only have this data after two occurrences
                 {
                     var minLength = (float)listOfAnalysisItems.Where(a => a.LengthToPrevOccur > 0).Min(a => a.LengthToPrevOccur);
-                    var maxLength = (float)listOfAnalysisItems.Where(a => a.LengthToPrevOccur > 0).Min(a => a.LengthToPrevOccur);
+                    var maxLength = (float)listOfAnalysisItems.Where(a => a.LengthToPrevOccur > 0).Max(a => a.LengthToPrevOccur);
                     var midPoint = (minLength + maxLength) / 2;
                     var delta = (maxLength - minLength) / 4;
                     //low
                     analysisItem.NumberOfLows = listOfAnalysisItems.Where(a => a.LengthToPrevOccur > 0).Count(a => (float)a.LengthToPrevOccur <= midPoint);
                     if (analysisItem.NumberOfLows > 0)
                     {
-                        analysisItem.PercentageOfLows = (int)Math.Round(((float)analysisItem.NumberOfLows / listOfAnalysisItems.Count) * 100);
+                        analysisItem.PercentageOfLows = (int)Math.Round(((float)analysisItem.NumberOfLows / (listOfAnalysisItems.Count-1)) * 100);
                         analysisItem.AvrOfLows = (float)listOfAnalysisItems.Where(a => a.LengthToPrevOccur > 0).Where(a => (float)a.LengthToPrevOccur <= midPoint).Select(a => a.LengthToPrevOccur).Average();
                     }
 
                     //medium
-                    analysisItem.NumberOfMediums = listOfAnalysisItems.Count(a => ((float)a.LengthToPrevOccur >= midPoint - delta) && ((float)a.LengthToPrevOccur <= midPoint + delta));
+                    analysisItem.NumberOfMediums = listOfAnalysisItems.Count(a => ((float)a.LengthToPrevOccur > midPoint - delta) && ((float)a.LengthToPrevOccur < midPoint + delta));
                     if (analysisItem.NumberOfMediums > 0)
                     {
-                        analysisItem.PercentageOfMediums = (int)Math.Round(((float)analysisItem.NumberOfMediums / listOfAnalysisItems.Count) * 100);
+                        analysisItem.PercentageOfMediums = (int)Math.Round(((float)analysisItem.NumberOfMediums / (listOfAnalysisItems.Count - 1)) * 100);
                         analysisItem.AvrOfMediums = (float)listOfAnalysisItems.Where(a => ((float)a.LengthToPrevOccur >= midPoint - delta) && ((float)a.LengthToPrevOccur <= midPoint + delta)).Select(a => a.LengthToPrevOccur).Average();
                     }
 
@@ -189,7 +204,7 @@ namespace LuckyCharm.Busisness
                     analysisItem.NumberOfHighs = listOfAnalysisItems.Count(a => (float)a.LengthToPrevOccur > midPoint);
                     if (analysisItem.NumberOfHighs > 0)
                     {
-                        analysisItem.PercentageOfHighs = (int)Math.Round(((float)analysisItem.NumberOfHighs / listOfAnalysisItems.Count) * 100);
+                        analysisItem.PercentageOfHighs = (int)Math.Round(((float)analysisItem.NumberOfHighs / (listOfAnalysisItems.Count - 1)) * 100);
                         analysisItem.AvrOfHighs = (float)listOfAnalysisItems.Where(a => (float)a.LengthToPrevOccur > midPoint).Select(a => a.LengthToPrevOccur).Average();
                     }
                 }

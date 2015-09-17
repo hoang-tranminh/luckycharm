@@ -214,6 +214,7 @@
     <Compile Include="Busisness\DataFetcher2.cs" />
     <Compile Include="Busisness\DataFetcherBase.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataAccess\DBInitializer.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AnalysisItem.cs" />
     <Compile Include="Models\DailyResult.cs" />
+    <Compile Include="Models\DataAdminModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\VirtualAnalysisItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -294,6 +296,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Data\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

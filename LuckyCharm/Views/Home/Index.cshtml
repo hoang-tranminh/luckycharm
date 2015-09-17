@@ -1,26 +1,25 @@
-﻿<div class="jumbotron">
-    @if (ViewBag.FetchedData != true)
-    {
-        <form action="/home/FetchData" method="post">
-            <input type="text" name="date" value="01/01/2015" />
-            <input type="text" name="count" value="5" />
-            <input type="submit" value="FetchData" class="btn btn-primary" />
-        </form>
-    }
-    <div>
-        @if (ViewBag.AnalysedData != true)
-            {
-            <form action="/home/AnalyseData" method="post">
-                <input type="submit" value="AnalyseData" class="btn btn-primary" />
-            </form>
-        }
-    </div>
-
-</div>
+﻿
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
-        
+        <h2>20 numbers has longest length</h2>
+        @if (ViewBag.NumbersWithLongestLength != null)
+        {
+            foreach (var item in ViewBag.NumbersWithLongestLength)
+            {
+                <div>
+                    <span>Number: </span><span> @item.PrimaryNumber</span><br/>
+                    <span>Current length: </span> <span>@item.LengthToPrevOccur</span> <br/>
+                    <span>Average of previous lengths: </span> <span>@item.AvrOfPrevLengths</span> <br />
+                    <span>Average of high lengths: </span> <span>@item.AvrOfHighs</span> <br />
+                    <span>Average of medium lengths: </span> <span>@item.AvrOfMediums</span> <br />
+                    <span>Average of low lengths: </span> <span>@item.AvrOfLows</span> <br />
+                </div> 
+            }
+        }
+        <form action="/home/GetNumbersWithLongestLength" method="GET">
+            <input type="text" name="count" value="30" />
+            <input type="submit" value="Get data" class="btn btn-primary" />
+        </form>
         
     </div>
     <div class="col-md-4">

@@ -35,11 +35,55 @@ namespace LuckyCharm.Busisness
 
         protected string DateFormat = "dd-MM-yyyy";
 
+        private DateTime _latestRecordedDate = DateTime.MinValue;
+        private DateTime _oldestRecordedDate = DateTime.MinValue;
+        private int _numberOfRecord = -1;
+
+        private SxResultsContext dbContext = new SxResultsContext();
+
+        public virtual DateTime LatestRecordedDate
+        {
+            get
+            {
+                if (_latestRecordedDate == DateTime.MinValue)
+                {
+                    var item = dbContext.DailyResults.OrderByDescending(a => a.Date).FirstOrDefault();
+                    _latestRecordedDate = item == null ? DateTime.MinValue : item.Date;
+                }
+                return _latestRecordedDate;
+            }
+        }
+
+        public virtual DateTime OldestRecordedDate
+        {
+            get
+            {
+                if (_oldestRecordedDate == DateTime.MinValue)
+                {
+                    var item = dbContext.DailyResults.OrderBy(a => a.Date).FirstOrDefault();
+                    _oldestRecordedDate = item == null ? DateTime.MinValue : item.Date;
+                }
+                return _oldestRecordedDate;
+            }
+        }
+
+        public virtual int NumberOfRecord
+        {
+            get
+            {
+                if (_numberOfRecord == -1)
+                {
+                    _numberOfRecord = dbContext.DailyResults.Count();
+                }
+                return _numberOfRecord;
+            }
+        }
+
+
         public void FetchData(DateTime fromDate, DateTime toDate)
         {
             DateTime now = toDate;
 
-            var dbContext = new SxResultsContext();
             var count = 0;
             while (now >= fromDate)
             {
